@@ -1,3 +1,6 @@
+import { ValidationMiddleware } from './ValidationMiddleware.js';
+import { TestDto } from './TestDto.js';
+import { isSigned } from './Rbac.js';
 import fastifyModule  from "fastify";
 import cookie from '@fastify/cookie';
 import formBody from "@fastify/formbody";
@@ -12,21 +15,14 @@ fastify.register(cookie, {
 fastify.register(formBody);
 
 fastify.post(
-  "/test",
-  (request, reply) => {
-      if (!request.cookies.token) {
-          reply.status(403).send({
-              message: "sign in required"
-          });
-      }
-      if (!request.body.xxx) {
-          reply.status(400).send({
-              message: "xxx field is required"
-          });
-      }
-      // do something
-      return { status: "OK" };
-  }
+    "/test",
+    {
+        preHandler: [isSigned, ValidationMiddleware(TestDto)]
+    },
+    () => {
+        // do something
+        return { status: "OK" };
+    }
 );
 
 fastify.listen(
