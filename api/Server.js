@@ -1,11 +1,13 @@
-import { ValidationMiddleware } from './ValidationMiddleware.js';
-import { TestDto } from './TestDto.js';
-import { isSigned } from './Rbac.js';
 import fastifyModule  from "fastify";
 import cookie from '@fastify/cookie';
 import formBody from "@fastify/formbody";
 
+import { TestController } from './Controller/TestController.js';
+import { ArticlesController } from './Controller/ArticlesController.js';
+import { UserController } from './Controller/UserController.js';
+
 const fastify = fastifyModule();
+
 fastify.register(cookie, {
   secret: '',
   hook: 'onRequest',
@@ -16,13 +18,17 @@ fastify.register(formBody);
 
 fastify.post(
     "/test",
-    {
-        preHandler: [isSigned, ValidationMiddleware(TestDto)]
-    },
-    () => {
-        // do something
-        return { status: "OK" };
-    }
+    TestController
+);
+
+fastify.get(
+  "/articles",
+  ArticlesController
+);
+
+fastify.get(
+  "/users/:userId",
+  UserController
 );
 
 fastify.listen(
