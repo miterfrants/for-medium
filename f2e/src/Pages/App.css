@@ -1,0 +1,18 @@
+.App {
+}
+
+.App header {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  height: 50px;
+  border-bottom: 2px solid #ddd;
+}
+
+.App nav {
+  margin-left: 30px;
+}
+
+.App .link {
+  color: rgb(74, 74, 74);
+}

@@ -4,7 +4,7 @@ import { Article } from '../Models/ORM/Article.js';
 export const ArticlesController  = () => {
     return dbContext.sync().then(()=>{
         return Article.findAll({
-            attributes: ['title', 'content']
+            attributes: ['title', 'content', 'userId']
         }).then(articles=> {
             return articles;
         })

@@ -8,6 +8,11 @@ import { UserController } from './Controller/UserController.js';
 
 const fastify = fastifyModule();
 
+fastify.addHook('preHandler', (req, res, done) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  done();
+});
+
 fastify.register(cookie, {
   secret: '',
   hook: 'onRequest',
@@ -32,7 +37,7 @@ fastify.get(
 );
 
 fastify.listen(
-  { port: 3000, host: "0.0.0.0" },
+  { port: 5000, host: "0.0.0.0" },
   function (err, address) {
     if (err) {
       console.log(err);
