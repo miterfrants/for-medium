@@ -2,9 +2,13 @@ import fastifyModule  from "fastify";
 import cookie from '@fastify/cookie';
 import formBody from "@fastify/formbody";
 
+import { ValidationMiddleware } from './Middleware/ValidationMiddleware.js';
+import { isSigned } from './Middleware/Rbac.js';
+
 import { TestController } from './Controller/TestController.js';
 import { ArticlesController } from './Controller/ArticlesController.js';
 import { UserController } from './Controller/UserController.js';
+import { TestDto } from "./Models/DTO/TestDto.js";
 
 const fastify = fastifyModule();
 
@@ -23,6 +27,9 @@ fastify.register(formBody);
 
 fastify.post(
     "/test",
+    {
+      preHandler: [isSigned, ValidationMiddleware(TestDto)]
+    },
     TestController
 );
 

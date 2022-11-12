@@ -1,12 +1,6 @@
-import { dbContext } from "../Models/ORM/DbContext.js";
-import { Article } from '../Models/ORM/Article.js';
+import { dataContext } from '../Repository/DataContext.js';
 
-export const ArticlesController  = () => {
-    return dbContext.sync().then(()=>{
-        return Article.findAll({
-            attributes: ['title', 'content', 'userId']
-        }).then(articles=> {
-            return articles;
-        })
-    });
+export const ArticlesController  = async (req) => {
+    const articleIds = await dataContext.getKeywordRepositoryInstance().findArticlesIds(req.query.keyword);
+    return dataContext.getArticleRepositoryInstance().findAll(articleIds);
 }

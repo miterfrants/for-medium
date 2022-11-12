@@ -1,14 +1,7 @@
-import { dbContext } from '../Models/ORM/DbContext.js';
-import { User } from '../Models/ORM/User.js';
+import { dataContext } from '../Repository/DataContext.js';
+
 export const UserController  = async (request, reply) => {
-    const user = await dbContext.sync().then(()=>{
-        return User.findOne({
-            where: {id: request.params.userId},
-            attributes: ['id', 'name']
-        }).then((result)=>{
-            return result?.dataValues;
-        })
-    });
+    const user = await dataContext.getUserRepositoryInstance().find(request.params.userId);
     if (!user) {
         reply.status(404).send({message: "user not found"});
     }
