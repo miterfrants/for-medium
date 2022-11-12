@@ -2,15 +2,3 @@
     display: flex;
     justify-content: start;
 }
-
-.articles article {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.articles .profile {
-    margin: 0;
-    padding: 0;
-}

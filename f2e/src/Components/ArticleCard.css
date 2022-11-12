@@ -1,0 +1,11 @@
+.article-card {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.article-card .profile {
+    margin: 0;
+    padding: 0;
+}

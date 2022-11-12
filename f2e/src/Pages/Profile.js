@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import "./Profile.css";
+import ProfileItem from '../Components/ProfileItem';
 
 function Profile() {
     const { userId } = useParams();
@@ -19,9 +20,7 @@ function Profile() {
     return (
       <div className="profile">
         Profile Page
-        <h2>
-            {user?.name}
-        </h2>
+        <ProfileItem user={user}></ProfileItem>
       </div>
     );
   }

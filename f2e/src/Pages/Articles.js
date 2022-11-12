@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './Articles.css';
 import { Link } from 'react-router-dom';
+import ArticleCard from '../Components/ArticleCard';
 
 function Articles() {
     const [articles, setArticles] = useState([]);
@@ -42,13 +43,7 @@ function Articles() {
         {
             articles.map((article) =>{ 
                 return (
-                    <article className="article-card">
-                        <h2>{article.title}</h2>
-                        <p>{article.content}</p>
-                        <Link className="profile" to={`../users/${article.author?.id}`}>
-                            {article.author?.name}
-                        </Link>
-                    </article>
+                    <ArticleCard key={article.id} article={article}></ArticleCard>
                 )
             })
         }
