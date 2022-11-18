@@ -9,9 +9,7 @@ export function ValidationMiddleware (dto) {
                 && dto[key] 
                 && dto[key] === VALIDATOR.REQUIRED) 
             {
-                reply.status(400).send({
-                    message: `${key} field is required`
-                });
+                throw new CustomError(`${key} field is required`, 400, SEVERITY_LEVEL.INFO);
             }
         }
         next();
