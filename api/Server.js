@@ -9,6 +9,7 @@ import { TestController } from './Controller/TestController.js';
 import { ArticlesController } from './Controller/ArticlesController.js';
 import { UserController } from './Controller/UserController.js';
 import { TestDto } from "./Models/DTO/TestDto.js";
+import { CustomError, SEVERITY_LEVEL } from "./Models/CustomError.js";
 
 const fastify = fastifyModule();
 
@@ -42,6 +43,22 @@ fastify.get(
   "/users/:userId",
   UserController
 );
+
+fastify.setErrorHandler(function (error, request, reply) {
+  if(error instanceof CustomError) {
+    reply.status(error.httpStatus);
+  }
+
+  if (error instanceof CustomError && error.level === SEVERITY_LEVEL.INOF) {
+    // expected error
+  } else if (error instanceof CustomError && error.level === SEVERITY_LEVEL.FATAL) {
+    // slack to engineer
+  } else if (error instanceof CustomError && error.level === SEVERITY_LEVEL.ERROR) {
+    // sent to error trakcing system
+  }
+  
+  reply.send({stauts: 'failed', message: error.message});
+})
 
 fastify.listen(
   { port: 5000, host: "0.0.0.0" },
